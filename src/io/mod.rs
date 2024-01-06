@@ -129,7 +129,10 @@ impl Limits {
         }
     }
 
-    #[deprecated(since = "0.24.0", note = "Use .consume() instead of .reserve()/.free() pairs")]
+    #[deprecated(
+        since = "0.24.0",
+        note = "Use .consume() instead of .reserve()/.free() pairs"
+    )]
     /// This function checks that the current limit allows for reserving the set amount
     /// of bytes, it then reduces the limit accordingly.
     pub fn reserve(&mut self, amount: u64) -> ImageResult<()> {
@@ -146,7 +149,10 @@ impl Limits {
         Ok(())
     }
 
-    #[deprecated(since = "0.24.0", note = "Use .consume() instead of .reserve()/.free() pairs")]
+    #[deprecated(
+        since = "0.24.0",
+        note = "Use .consume() instead of .reserve()/.free() pairs"
+    )]
     /// This function acts identically to [`reserve`], but takes a `usize` for convenience.
     pub fn reserve_usize(&mut self, amount: usize) -> ImageResult<()> {
         match u64::try_from(amount) {
@@ -162,7 +168,10 @@ impl Limits {
         }
     }
 
-    #[deprecated(since = "0.24.0", note = "Use .consume() instead of .reserve()/.free() pairs")]
+    #[deprecated(
+        since = "0.24.0",
+        note = "Use .consume() instead of .reserve()/.free() pairs"
+    )]
     /// This function increases the `max_alloc` limit with amount. Should only be used
     /// together with [`reserve`].
     ///
@@ -173,7 +182,10 @@ impl Limits {
         }
     }
 
-    #[deprecated(since = "0.24.0", note = "Use .consume() instead of .reserve()/.free() pairs")]
+    #[deprecated(
+        since = "0.24.0",
+        note = "Use .consume() instead of .reserve()/.free() pairs"
+    )]
     /// This function acts identically to [`free`], but takes a `usize` for convenience.
     pub fn free_usize(&mut self, amount: usize) {
         match u64::try_from(amount) {
