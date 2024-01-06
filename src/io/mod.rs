@@ -164,7 +164,7 @@ impl Limits {
 
     #[deprecated(
         since = "0.24.0",
-        note = "Use .consume() instead of .reserve()/.free() pairs"
+        note = "Use .consume_usize() instead of .reserve_usize()/.free_usize() pairs"
     )]
     /// This function acts identically to [`reserve`], but takes a `usize` for convenience.
     pub fn reserve_usize(&mut self, amount: usize) -> ImageResult<()> {
@@ -197,7 +197,7 @@ impl Limits {
 
     #[deprecated(
         since = "0.24.0",
-        note = "Use .consume() instead of .reserve()/.free() pairs"
+        note = "Use .consume_usize() instead of .reserve_usize()/.free_usize() pairs"
     )]
     /// This function acts identically to [`free`], but takes a `usize` for convenience.
     pub fn free_usize(&mut self, amount: usize) {
