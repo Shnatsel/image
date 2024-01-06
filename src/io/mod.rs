@@ -111,7 +111,6 @@ impl Limits {
         Ok(())
     }
 
-    #[must_use]
     pub fn consume(&mut self, amount: u64) -> ImageResult<Limits> {
         match self.max_alloc {
             None => Ok(self.clone()),
@@ -129,7 +128,6 @@ impl Limits {
         }
     }
 
-    #[must_use]
     pub fn consume_usize(&mut self, amount: usize) -> ImageResult<Limits> {
         match self.max_alloc {
             None => Ok(self.clone()),

@@ -168,11 +168,9 @@ impl<'a, R: 'a + Read> ImageDecoder<'a> for GifDecoder<R> {
             // and 'insert' the frame from left/top to logical screen width/height.
             let buffer_size = self.reader.buffer_size();
 
-            self.limits.reserve_usize(buffer_size)?;
+            self.limits.consume_usize(buffer_size)?;
 
             let mut frame_buffer = vec![0; buffer_size];
-
-            self.limits.free_usize(buffer_size);
 
             self.reader
                 .read_into_buffer(&mut frame_buffer[..])

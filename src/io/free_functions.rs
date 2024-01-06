@@ -104,8 +104,8 @@ pub(crate) fn load_inner<R: BufRead + Seek>(
             let mut limits = self.0;
             // Check that we do not allocate a bigger buffer than we are allowed to
             // FIXME: should this rather go in `DynamicImage::from_decoder` somehow?
-            limits.reserve(decoder.total_bytes())?;
-            decoder.set_limits(limits)?;
+            let new_limits = limits.consume(decoder.total_bytes())?;
+            decoder.set_limits(new_limits)?;
             DynamicImage::from_decoder(decoder)
         }
     }
