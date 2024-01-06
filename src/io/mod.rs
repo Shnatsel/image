@@ -129,6 +129,19 @@ impl Limits {
         }
     }
 
+    #[must_use]
+    pub fn consume_usize(&mut self, amount: usize) -> ImageResult<Limits> {
+        match self.max_alloc {
+            None => Ok(self.clone()),
+            Some(_) => match u64::try_from(amount) {
+                Ok(amount) => self.consume(amount),
+                Err(_) => Err(ImageError::Limits(error::LimitError::from_kind(
+                    error::LimitErrorKind::InsufficientMemory,
+                ))),
+            },
+        }
+    }
+
     #[deprecated(
         since = "0.24.0",
         note = "Use .consume() instead of .reserve()/.free() pairs"
