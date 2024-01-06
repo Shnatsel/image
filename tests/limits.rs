@@ -1,17 +1,11 @@
 //! Test enforcement of size and memory limits for various decoding APIs.
 //!
 //! We create an image, encode it with a given format, and then decode it with various APIs.
-//! We expect each decoding API to return an error because the limits are too low.//!
-//! The ones that do not return an error are buggy.
-//!
-//! There are several such buggy APIs in the crate. The tests for them are written but commented out.
-//! Pull requests fixing these APIs are very welcome.
+//! We expect each decoding API to return an error because the limits are too low.
 //!
 //! It is possible that a maliciously crafted file coud bypass these checks
 //! and cause a large allocation inside the decoder despite these limits.
 //! These tests cannot catch that, but fuzzing can.
-//!
-//! These tests also don't cover animation (yet). Adding tests for that would be very welcome too.
 
 use std::io::Cursor;
 
