@@ -50,6 +50,7 @@ impl Default for LimitSupport {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 #[allow(missing_copy_implementations)]
 #[allow(clippy::manual_non_exhaustive)]
+#[must_use]
 pub struct Limits {
     /// The maximum allowed image width. This limit is strict. The default is no limit.
     pub max_image_width: Option<u32>,
