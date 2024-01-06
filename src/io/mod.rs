@@ -111,6 +111,24 @@ impl Limits {
         Ok(())
     }
 
+    #[must_use]
+    pub fn consume(&mut self, amount: u64) -> ImageResult<Limits> {
+        match self.max_alloc {
+            None => Ok(self.clone()),
+            Some(limit) => {
+                if limit < amount {
+                    Err(ImageError::Limits(error::LimitError::from_kind(
+                        error::LimitErrorKind::InsufficientMemory,
+                    )))
+                } else {
+                    let mut new_limits = self.clone();
+                    new_limits.max_alloc = Some(limit - amount);
+                    Ok(new_limits)
+                }
+            }
+        }
+    }
+
     /// This function checks that the current limit allows for reserving the set amount
     /// of bytes, it then reduces the limit accordingly.
     pub fn reserve(&mut self, amount: u64) -> ImageResult<()> {
