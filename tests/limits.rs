@@ -73,7 +73,7 @@ fn gif() {
     assert!(load_through_reader(&image, ImageFormat::Gif, permissive_limits()).is_ok());
     // image::io::Reader
     assert!(load_through_reader(&image, ImageFormat::Gif, width_height_limits()).is_err());
-    assert!(load_through_reader(&image, ImageFormat::Gif, allocation_limits()).is_err()); // BROKEN!
+    assert!(load_through_reader(&image, ImageFormat::Gif, allocation_limits()).is_err());
 
     // GifDecoder
     let mut decoder = GifDecoder::new(Cursor::new(&image)).unwrap();
