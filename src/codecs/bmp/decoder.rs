@@ -1,7 +1,7 @@
 use crate::utils::vec_try_with_capacity;
 use std::cmp::{self, Ordering};
 use std::io::{self, BufRead, Seek, SeekFrom};
-use std::iter::{repeat, Rev};
+use std::iter::Rev;
 use std::slice::ChunksMut;
 use std::{error, fmt};
 
@@ -1276,14 +1276,21 @@ impl<R: BufRead + Seek> BmpDecoder<R> {
                                 });
                             }
                             ImageType::RLE4 => {
-                                if !set_4bit_pixel_run(
-                                    &mut pixel_iter,
-                                    p,
-                                    repeat(&palette_index),
-                                    n_pixels as usize,
-                                ) {
-                                    return Err(DecoderError::CorruptRleData.into());
-                                }
+                                // functionally identical to set_4bit_pixel_run()
+                                // but does not error out when n_pixels is too large
+                                let idx_high = (palette_index >> 4) as usize;
+                                let idx_low = (palette_index & 0xf) as usize;
+                                let repeat_pixels: [[u8; 3]; 2] = [p[idx_high], p[idx_low]];
+
+                                (&mut pixel_iter)
+                                    .take(n_pixels as usize)
+                                    .enumerate()
+                                    .for_each(|(i, p)| {
+                                        let palette_pixel = repeat_pixels[i % 2];
+                                        p[2] = palette_pixel[2];
+                                        p[1] = palette_pixel[1];
+                                        p[0] = palette_pixel[0];
+                                    });
                             }
                             _ => unreachable!(),
                         }
